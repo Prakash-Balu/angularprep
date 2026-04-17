@@ -31,5 +31,17 @@ export const routes: Routes = [
         loadComponent: () => 
             import('./main-box/main-box.component')
             .then(m=> m.MainBoxComponent)
+    },
+    {
+        path: 'invoice',
+        loadComponent: () => 
+            import('./components/invoice/invoice.component')
+            .then(m=> m.InvoiceComponent)
+    },
+    {
+        path: 'weather',
+        loadComponent: () => 
+            import('./components/weather/weather.component')
+            .then(m=> m.WeatherComponent)
     }
 ];

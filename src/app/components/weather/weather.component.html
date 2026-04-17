@@ -1,0 +1,28 @@
+<div class="card">
+  <h2>Weather — Pure Pipe (Temperature Converter)</h2>
+
+  <div class="city-list">
+    <button
+      *ngFor="let city of cities"
+      [class.active]="city === selectedCity"
+      (click)="select(city)">
+      {{ city.name }}
+    </button>
+  </div>
+
+  <div class="temp-display" *ngIf="selectedCity">
+    <h3>{{ selectedCity.name }}</h3>
+    <table>
+      <tr>
+        <th>Celsius</th>
+        <th>Fahrenheit</th>
+        <th>Kelvin</th>
+      </tr>
+      <tr>
+        <td>{{ selectedCity.tempC }}° C</td>
+        <td>{{ selectedCity.tempC | temperature: 'C' : 'F' }}</td>
+        <td>{{ selectedCity.tempC | temperature: 'C' : 'K' }}</td>
+      </tr>
+    </table>
+  </div>
+</div>

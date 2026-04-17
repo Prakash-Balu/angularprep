@@ -1,0 +1,67 @@
+<div class="card">
+  <h2>Invoice — Pure Pipe (Currency Format)</h2>
+  <p class="info">
+    Pipe re-runs <strong>only</strong> when the amount value changes.
+    No wasted re-computation on unrelated changes.
+  </p>
+
+  <div class="container">
+   <!-- Form Section -->
+      <div class="row g-3 mb-4">
+        <div class="col-md-3">
+          <label class="form-label">Invoice ID</label>
+          <input type="text" class="form-control" placeholder="INV001"
+                 [(ngModel)]="invDetails.id" />
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Item</label>
+          <input type="text" class="form-control" placeholder="Laptop"
+                 [(ngModel)]="invDetails.item" />
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Amount</label>
+          <input type="number" class="form-control" placeholder="0.00"
+                 [(ngModel)]="invDetails.amount" />
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Currency</label>
+          <select class="form-select" [(ngModel)]="invDetails.currency">
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="INR">INR</option>
+            <option value="GBP">GBP</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="text-center mt-3">
+          <button class="btn btn-primary" (click)="addItem()">Add Item</button>
+        </div> 
+      </div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Invoice ID</th>
+        <th>Item</th>
+        <th>Amount (Raw)</th>
+        <th>Formatted (Pure Pipe)</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let inv of invoices; let i = index">
+        <td>{{ inv.id }}</td>
+        <td>{{ inv.item }}</td>
+        <td>{{ inv.amount }}</td>
+        <td>{{ inv.amount | currencyFormat: inv.currency }}</td>
+         <td>
+              <button class="btn btn-danger btn-sm"
+                      (click)="removeItem(i)">Delete</button>
+            </td>
+      </tr>
+    </tbody>
+  </table>
+
+  
+</div>

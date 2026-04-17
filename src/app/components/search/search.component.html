@@ -1,0 +1,38 @@
+<div class="card">
+  <h2>Employee Search — Impure Pipe (Live Filter)</h2>
+  <p class="info">
+    Impure pipe detects mutations inside the same array reference.
+    A pure pipe would show stale results after <code>push()</code>.
+  </p>
+
+  <div class="controls">
+    <input
+      [(ngModel)]="searchText"
+      placeholder="Search employees..."
+      class="search-input" />
+
+    <select [(ngModel)]="filterField">
+      <option value="name">Name</option>
+      <option value="dept">Department</option>
+      <option value="role">Role</option>
+    </select>
+
+    <button (click)="addEmployee()">+ Add Employee</button>
+  </div>
+
+  <p>Showing {{ (employees | searchFilter: searchText: filterField).length }} of {{ employees.length }} employees</p>
+
+  <table>
+    <thead>
+      <tr><th>ID</th><th>Name</th><th>Department</th><th>Role</th></tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let emp of employees | searchFilter: searchText: filterField">
+        <td>{{ emp.id }}</td>
+        <td>{{ emp.name }}</td>
+        <td>{{ emp.dept }}</td>
+        <td>{{ emp.role }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -43,5 +43,17 @@ export const routes: Routes = [
         loadComponent: () => 
             import('./components/weather/weather.component')
             .then(m=> m.WeatherComponent)
+    },
+    {
+        path: 'search',
+        loadComponent: () => 
+            import('./components/search/search.component')
+            .then(m=> m.SearchComponent)
+    },
+    {
+        path: 'clock',
+        loadComponent: () => 
+            import('./components/clock/clock.component')
+            .then(m=> m.ClockComponent)
     }
 ];

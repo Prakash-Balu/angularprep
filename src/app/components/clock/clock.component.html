@@ -1,0 +1,17 @@
+<div class="card">
+  <h2>World Clock — Impure Pipe (Live Time)</h2>
+  <p class="info">
+    The pipe receives a static timezone string but re-runs every change
+    detection cycle, so the displayed time always reflects <code>new Date()</code>.
+  </p>
+
+  <!-- tick is hidden but drives change detection every second -->
+  <span style="display:none">{{ tick }}</span>
+
+  <div class="clocks">
+    <div class="clock-box" *ngFor="let tz of timezones">
+      <div class="city">{{ tz.label }}</div>
+      <div class="time">{{ tz.zone | liveTime }}</div>
+    </div>
+  </div>
+</div>

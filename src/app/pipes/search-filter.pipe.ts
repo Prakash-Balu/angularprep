@@ -1,12 +1,18 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'searchFilter'
+  name: 'searchFilter',
+  pure: false
 })
 export class SearchFilterPipe implements PipeTransform {
 
-  transform(value: unknown, ...args: unknown[]): unknown {
-    return null;
+  transform(employees: any[], searchText: string, field: string = 'name'): any[] {
+    if (!employees || !searchText) return employees;
+
+    const text = searchText.toLowerCase();
+    return employees.filter(emp =>
+      emp[field]?.toString().toLowerCase().includes(text)
+    );
   }
 
 }

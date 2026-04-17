@@ -1,0 +1,13 @@
+<div *ngIf="changeDetectRefOption === 'detectChanges'"> 
+    <ul>
+        <li *ngFor="let item of data">{{ item }}</li>
+    </ul>
+
+    <button (click)="refresh()">Refresh</button>
+</div>
+
+<div *ngIf="changeDetectRefOption === 'markForCheck'">
+    <ul>
+        <li *ngFor="let item of data1 | async">{{ item }}</li>
+    </ul>
+</div>

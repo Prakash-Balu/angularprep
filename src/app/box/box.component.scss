@@ -1,0 +1,50 @@
+.box {
+  border: 2px solid #4a90e2;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 10px;
+  width: 200px;
+  text-align: center;
+  background: #f0f6ff;
+  display: inline-block;
+  vertical-align: top;
+}
+
+h3 {
+  margin: 0 0 10px;
+  color: #2c3e50;
+}
+
+.count {
+  font-size: 48px;
+  font-weight: bold;
+  color: #4a90e2;
+  margin: 10px 0;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.increment { background: #27ae60; color: white; }
+.decrement { background: #e74c3c; color: white; }
+.reset     { background: #95a5a6; color: white; font-size: 12px; }
+
+.btn:hover { opacity: 0.85; }
+
+.note {
+  font-size: 11px;
+  color: #777;
+  margin-top: 10px;
+}

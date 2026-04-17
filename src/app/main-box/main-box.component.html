@@ -1,0 +1,63 @@
+<div class="container">
+
+  <!-- ===== SCENARIO 1: providedIn null (component-scoped) ===== -->
+  <section>
+    <h1>Scenario 1 — <code>providedIn: null</code></h1>
+    <p class="desc">
+      Each <strong>app-box</strong> lists <code>CounterService</code> in its own
+      <code>providers</code> array. Angular creates a <em>separate instance</em>
+      for every box — incrementing one does not affect the others.
+    </p>
+
+    <div class="boxes">
+      <app-box *ngFor="let name of boxes" [boxName]="name"></app-box>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ===== SCENARIO 2: providedIn root (singleton) ===== -->
+  <section>
+    <h1>Scenario 2 — <code>providedIn: 'root'</code> (singleton)</h1>
+    <p class="desc">
+      If you change <code>CounterService</code> to <code>providedIn: 'root'</code>
+      and remove the <code>providers</code> array from <code>BoxComponent</code>,
+      all boxes share <em>one single instance</em> — they all show the same count.
+    </p>
+
+    <div class="comparison">
+      <table>
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th><code>providedIn: null</code></th>
+            <th><code>providedIn: 'root'</code></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Instances created</td>
+            <td>One per component</td>
+            <td>One for the entire app</td>
+          </tr>
+          <tr>
+            <td>Shared state</td>
+            <td>No — isolated</td>
+            <td>Yes — shared everywhere</td>
+          </tr>
+          <tr>
+            <td>Requires <code>providers: []</code></td>
+            <td>Yes (in component)</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Use case</td>
+            <td>Per-component state</td>
+            <td>App-wide state / singleton</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>

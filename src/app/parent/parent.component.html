@@ -1,0 +1,13 @@
+<div *ngIf="changeDetectRefOption === 'detectChanges'">
+    <input #inputAquaticCreature type="text" placeholder="Enter a new creature">
+    <button (click)="addAquaticCreature(inputAquaticCreature.value)">Add creature</button>
+
+    <app-child [data]="aquaticCreatures"></app-child>
+</div>
+
+<div *ngIf="changeDetectRefOption === 'markForCheck'">
+    <input #creature type="text" placeholder="Enter a new creature">
+    <button (click)="addAquaticCreature1(creature.value)">Add creature</button>
+
+    <app-child [data1]="aquaticCreatures1"></app-child>
+</div>

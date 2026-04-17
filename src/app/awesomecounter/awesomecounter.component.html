@@ -1,0 +1,26 @@
+
+<div class="counter-container">
+  <h2>Awesome Counter</h2>
+
+  <!-- Display count from signal -->
+  <p>Current Count: {{ count() }}</p>
+
+  <!-- Increment button -->
+  <button type="button" (click)="increment()">
+    Increment
+  </button>
+</div>
+
+<div class="computed-signal">
+    <h2>Computed/Derived Counter</h2>
+
+    <!-- Display count from signal -->
+    <p>Current Count: {{ derivedCount() }}</p>
+
+    <p>10x counter: {{derivedCounter()}}</p>
+
+     <!-- Increment button -->
+    <button type="button" (click)="incrementDerived()">
+        Increment
+    </button>
+</div>

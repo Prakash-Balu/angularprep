@@ -5,13 +5,13 @@ export const routes: Routes = [
     {
         path: 'awesome',
         loadComponent: () =>
-            import('./awesomecounter/awesomecounter.component')
+            import('./components/awesomecounter/awesomecounter.component')
             .then(m => m.AwesomecounterComponent)
     },
     {
         path: 'counter',
         loadComponent: () => 
-            import('./counter/counter.component')
+            import('./components/counter/counter.component')
             .then(m=> m.CounterComponent)
     },
     {
@@ -23,13 +23,13 @@ export const routes: Routes = [
     {
         path: 'communication',
         loadComponent: () => 
-            import('./communication/parent/parent.component')
+            import('./components/communication/parent/parent.component')
             .then(m=> m.ParentComponent)
     },
     {
         path: 'main-box',
         loadComponent: () => 
-            import('./main-box/main-box.component')
+            import('./components/main-box/main-box.component')
             .then(m=> m.MainBoxComponent)
     },
     {

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CounterService } from '../counter.service';
+import { CounterService } from '../../counter.service';
 import { CommonModule } from '@angular/common';
 
 @Component({

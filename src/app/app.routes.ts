@@ -55,5 +55,23 @@ export const routes: Routes = [
         loadComponent: () => 
             import('./components/clock/clock.component')
             .then(m=> m.ClockComponent)
+    },
+    {
+        path: 'cart',
+        loadComponent: () => 
+            import('./components/cart/cart.component')
+            .then(m=> m.CartComponent)
+    },
+    {
+        path: 'temperature',
+        loadComponent: () => 
+            import('./components/temperature/temperature.component')
+            .then(m=> m.TemperatureComponent)
+    },
+    {
+        path: 'stock-alert',
+        loadComponent: () => 
+            import('./components/notification/notification.component')
+            .then(m=> m.NotificationComponent)
     }
 ];

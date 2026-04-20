@@ -1,0 +1,35 @@
+<div class="card shadow p-4">
+  <h3 class="text-primary mb-3">Stock Alert — effect()</h3>
+
+  <div class="row g-3 mb-3">
+    <div class="col-md-6">
+      <label class="form-label fw-bold">
+        Stock Price: ${{ stockPrice() }}
+      </label>
+      <input type="range" class="form-range"
+             min="50" max="150"
+             [value]="stockPrice()"
+             (input)="updatePrice(+$any($event.target).value)" />
+    </div>
+    <div class="col-md-6">
+      <label class="form-label fw-bold">
+        Alert Limit: ${{ alertLimit() }}
+      </label>
+      <input type="range" class="form-range"
+             min="100" max="140"
+             [value]="alertLimit()"
+             (input)="updateLimit(+$any($event.target).value)" />
+    </div>
+  </div>
+
+  <!-- Toast Notifications -->
+  <div *ngFor="let toast of toasts()"
+       class="alert alert-{{ toast.type }} alert-dismissible d-flex justify-content-between">
+    <span>{{ toast.message }}</span>
+    <button class="btn-close" (click)="removeToast(toast.id)"></button>
+  </div>
+
+  <p *ngIf="toasts().length === 0" class="text-muted text-center">
+    Move the slider to trigger alerts...
+  </p>
+</div>

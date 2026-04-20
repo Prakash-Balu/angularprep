@@ -1,0 +1,54 @@
+<div class="card shadow p-4">
+  <h3 class="text-primary mb-3">Shopping Cart — signal() + computed()</h3>
+
+  <table class="table table-bordered table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Subtotal</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of cartItems()">
+        <td>{{ item.name }}</td>
+        <td>${{ item.price }}</td>
+        <td>
+          <input type="number" class="form-control form-control-sm"
+                 style="width: 80px"
+                 [value]="item.quantity"
+                 (change)="updateQty(item.id, +$any($event.target).value)" />
+        </td>
+        <td>${{ (item.price * item.quantity) | number:'1.2-2' }}</td>
+        <td>
+          <button class="btn btn-danger btn-sm"
+                  (click)="removeItem(item.id)">Remove</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Summary -->
+  <div class="card bg-light p-3 mt-3">
+    <div class="d-flex justify-content-between">
+      <span>Total Items:</span>
+      <strong>{{ totalItems() }}</strong>
+    </div>
+    <div class="d-flex justify-content-between">
+      <span>Subtotal:</span>
+      <strong>${{ totalPrice() | number:'1.2-2' }}</strong>
+    </div>
+    <div class="d-flex justify-content-between text-danger"
+         *ngIf="discount() > 0">
+      <span>Discount (10%):</span>
+      <strong>-${{ discount() | number:'1.2-2' }}</strong>
+    </div>
+    <hr />
+    <div class="d-flex justify-content-between fs-5 fw-bold text-success">
+      <span>Final Price:</span>
+      <span>${{ finalPrice() | number:'1.2-2' }}</span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,76 @@
+<div class="container mt-4">
+  <div class="card shadow">
+
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">User Search — effect() triggers API</h4>
+    </div>
+
+    <div class="card-body">
+
+      <!-- Signals that trigger effect() -->
+      <div class="row g-3 mb-3">
+        <div class="col-md-8">
+          <label class="form-label fw-bold">Search</label>
+          <input class="form-control"
+                 placeholder="Type name or email..."
+                 [ngModel]="searchQuery()"
+                 (ngModelChange)="searchQuery.set($event)" />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label fw-bold">Role Filter</label>
+          <select class="form-select"
+                  [ngModel]="selectedRole()"
+                  (ngModelChange)="selectedRole.set($event)">
+            <option value="all">All Roles</option>
+            <option value="synergize">Synergize</option>
+            <option value="harness">Harness</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- API call counter -->
+      <div class="alert alert-info py-1">
+        API calls triggered by effect(): <strong>{{ apiCalls() }}</strong>
+      </div>
+
+      <!-- Loading -->
+      <div *ngIf="loading()" class="text-center my-3">
+        <div class="spinner-border text-primary"></div>
+        <p class="mt-2">Fetching from API...</p>
+      </div>
+
+      <!-- Error -->
+      <div *ngIf="error()" class="alert alert-danger">
+        {{ error() }}
+      </div>
+
+      <!-- Results -->
+      <table class="table table-bordered table-hover"
+             *ngIf="!loading() && users().length > 0">
+        <thead class="table-dark">
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>City</th>
+            <th>Company</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users()">
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.address.city }}</td>
+            <td>{{ user.company.name }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p *ngIf="!loading() && users().length === 0"
+         class="text-center text-muted">
+        No users found.
+      </p>
+
+    </div>
+
+  </div>
+</div>

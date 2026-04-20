@@ -1,0 +1,84 @@
+<div class="container mt-4">
+  <div class="card shadow">
+
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+      <h4 class="mb-0">Live Dashboard — effect() polls API</h4>
+
+      <div class="d-flex gap-2 align-items-center">
+        <span *ngIf="isPolling()"
+              class="badge bg-success">
+          ● Live
+        </span>
+        <span *ngIf="!isPolling()"
+              class="badge bg-secondary">
+          ● Paused
+        </span>
+
+        <button class="btn btn-sm"
+                [class.btn-danger]="isPolling()"
+                [class.btn-success]="!isPolling()"
+                (click)="togglePolling()">
+          {{ isPolling() ? 'Stop' : 'Start' }} Polling
+        </button>
+      </div>
+    </div>
+
+    <div class="card-body">
+
+      <!-- Stats Row -->
+      <div class="row g-3 mb-3">
+        <div class="col-md-3">
+          <div class="card bg-primary text-white text-center p-3">
+            <h6>Total Posts</h6>
+            <h2>{{ totalPosts() }}</h2>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card bg-success text-white text-center p-3">
+            <h6>Poll Count</h6>
+            <h2>{{ pollCount() }}</h2>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card bg-warning text-white text-center p-3">
+            <h6>Avg Title Length</h6>
+            <h2>{{ avgTitleLen() }}</h2>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card bg-info text-white text-center p-3">
+            <h6>Last Updated</h6>
+            <p class="mb-0">
+              {{ lastUpdated() ? (lastUpdated() | date:'HH:mm:ss') : '—' }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading -->
+      <div *ngIf="loading()" class="text-center mb-2">
+        <div class="spinner-border spinner-border-sm text-primary"></div>
+        <span class="ms-2">Fetching...</span>
+      </div>
+
+      <!-- Posts Table -->
+      <table class="table table-sm table-bordered table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Body Preview</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let post of posts()">
+            <td>{{ post.id }}</td>
+            <td>{{ post.title }}</td>
+            <td>{{ post.body | slice:0:50 }}...</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>

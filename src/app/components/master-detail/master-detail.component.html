@@ -1,0 +1,88 @@
+<div class="container mt-4">
+  <h4 class="text-primary mb-3">Master-Detail — Chained effect() API Calls</h4>
+
+  <div class="row g-3">
+
+    <!-- Level 1 — Users -->
+    <div class="col-md-3">
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+          Users
+        </div>
+        <div class="card-body p-0">
+          <div *ngIf="loadingUsers()" class="text-center p-3">
+            <div class="spinner-border spinner-border-sm"></div>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li *ngFor="let user of users()"
+                class="list-group-item list-group-item-action"
+                [class.active]="selectedUser()?.id === user.id"
+                (click)="selectedUser.set(user)"
+                style="cursor:pointer">
+              {{ user.name }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Level 2 — Posts -->
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white d-flex justify-content-between">
+          <span>Posts</span>
+          <span class="badge bg-light text-dark">{{ totalPosts() }}</span>
+        </div>
+        <div class="card-body p-0">
+
+          <p *ngIf="!selectedUser()" class="text-muted p-3">
+            ← Select a user
+          </p>
+
+          <div *ngIf="loadingPosts()" class="text-center p-3">
+            <div class="spinner-border spinner-border-sm text-primary"></div>
+          </div>
+
+          <ul class="list-group list-group-flush">
+            <li *ngFor="let post of posts()"
+                class="list-group-item list-group-item-action"
+                [class.active]="selectedPost()?.id === post.id"
+                (click)="selectedPost.set(post)"
+                style="cursor:pointer">
+              <small>{{ post.title | slice:0:40 }}...</small>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Level 3 — Comments -->
+    <div class="col-md-5">
+      <div class="card shadow-sm">
+        <div class="card-header bg-success text-white">
+          Comments
+        </div>
+        <div class="card-body">
+
+          <p *ngIf="!selectedPost()" class="text-muted">
+            ← Select a post
+          </p>
+
+          <div *ngIf="loadingComments()" class="text-center">
+            <div class="spinner-border spinner-border-sm text-success"></div>
+          </div>
+
+          <div *ngFor="let comment of comments()"
+               class="border rounded p-2 mb-2 bg-light">
+            <p class="fw-bold mb-0">{{ comment.name }}</p>
+            <small class="text-muted">{{ comment.email }}</small>
+            <p class="mt-1 mb-0 small">{{ comment.body }}</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

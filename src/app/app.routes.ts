@@ -73,5 +73,29 @@ export const routes: Routes = [
         loadComponent: () => 
             import('./components/notification/notification.component')
             .then(m=> m.NotificationComponent)
+    },
+    {
+        path: 'user-search',
+        loadComponent: () => 
+            import('./components/user-search/user-search.component')
+            .then(m=> m.UserSearchComponent)
+    },
+    {
+        path: 'master-details',
+        loadComponent: () => 
+            import('./components/master-detail/master-detail.component')
+            .then(m=> m.MasterDetailComponent)
+    },
+    {
+        path: 'auto-save',
+        loadComponent: () => 
+            import('./components/auto-save/auto-save.component')
+            .then(m=> m.AutoSaveComponent)
+    },
+    {
+        path: 'live-dashboard',
+        loadComponent: () => 
+            import('./components/live-dashboard/live-dashboard.component')
+            .then(m=> m.LiveDashboardComponent)
     }
 ];

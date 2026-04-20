@@ -1,0 +1,63 @@
+<div class="container mt-4">
+  <div class="card shadow">
+
+    <div class="card-header bg-success text-white d-flex justify-content-between">
+      <h4 class="mb-0">Auto-Save Form — effect() calls API</h4>
+
+      <!-- Save Status Badge -->
+      <div>
+        <span *ngIf="saveStatus() === 'idle'"    class="badge bg-light text-dark">Ready</span>
+        <span *ngIf="saveStatus() === 'saving'"  class="badge bg-warning text-dark">
+          <span class="spinner-border spinner-border-sm"></span> Saving...
+        </span>
+        <span *ngIf="saveStatus() === 'saved'"   class="badge bg-success">✔ Saved</span>
+        <span *ngIf="saveStatus() === 'error'"   class="badge bg-danger">✘ Error</span>
+      </div>
+    </div>
+
+    <div class="card-body">
+
+      <div class="mb-3">
+        <label class="form-label fw-bold">Title</label>
+        <input class="form-control"
+               placeholder="Enter title..."
+               [ngModel]="formData().title"
+               (ngModelChange)="updateField('title', $event)" />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-bold">Body</label>
+        <textarea class="form-control" rows="4"
+                  placeholder="Enter content..."
+                  [ngModel]="formData().body"
+                  (ngModelChange)="updateField('body', $event)">
+        </textarea>
+      </div>
+
+      <!-- Info Panel -->
+      <div class="alert alert-info mb-0">
+        <div class="row text-center">
+          <div class="col-md-4">
+            <small class="text-muted">Auto-Saves</small>
+            <p class="fw-bold mb-0">{{ saveCount() }}</p>
+          </div>
+          <div class="col-md-4">
+            <small class="text-muted">Last Saved</small>
+            <p class="fw-bold mb-0">
+              {{ lastSaved() ? (lastSaved() | date:'HH:mm:ss') : '—' }}
+            </p>
+          </div>
+          <div class="col-md-4">
+            <small class="text-muted">Form Valid</small>
+            <p class="fw-bold mb-0"
+               [class.text-success]="isFormValid()"
+               [class.text-danger]="!isFormValid()">
+              {{ isFormValid() ? 'Yes' : 'No' }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+<!-- post-list.component.html -->
+<div class="container">
+
+  <!-- ── Header ── -->
+  <div class="header">
+    <div class="title-row">
+      <h2>📡 Live Posts</h2>
+      <span class="badge">{{ postCount() }}</span>
+
+      <!-- ✅ Signal: polling indicator -->
+      @if (polling()) {
+        <span class="live-dot" title="Polling every 5s">● LIVE</span>
+      }
+    </div>
+
+    <div class="meta-row">
+      @if (lastUpdated()) {
+        <small>🕐 Last synced: {{ lastUpdated() }}</small>
+      }
+      <button class="btn-primary" (click)="simulateNewPost()">
+        + Simulate Push
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Loading ── -->
+  @if (loading()) {
+    <div class="spinner">
+      <span>⏳ Loading posts...</span>
+    </div>
+  }
+
+  <!-- ── Error ── -->
+  @if (error()) {
+    <div class="error-banner">⚠️ {{ error() }}</div>
+  }
+
+  <!-- ── Posts ── -->
+  @if (!loading() && posts().length === 0) {
+    <p class="empty">No posts found.</p>
+  }
+
+  <!-- ✅ @for — Angular 19 new control flow (no *ngFor) -->
+  @for (post of posts(); track post.id) {
+    <div class="post-card">
+      <div class="post-header">
+        <span class="user-tag">👤 User #{{ post.userId }}</span>
+        <button class="delete-btn" (click)="deletePost(post.id)">✕</button>
+      </div>
+      <h4>{{ post.title }}</h4>
+      <p>{{ post.body }}</p>
+    </div>
+  }
+
+</div>

@@ -97,5 +97,11 @@ export const routes: Routes = [
         loadComponent: () => 
             import('./components/live-dashboard/live-dashboard.component')
             .then(m=> m.LiveDashboardComponent)
+    },
+    {
+        path: 'post-list',
+        loadComponent: () => 
+            import('./components/post-list/post-list.component')
+            .then(m=> m.PostListComponent)
     }
 ];

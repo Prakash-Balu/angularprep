@@ -1,2 +1,9 @@
 <app-child />
 <button (click)="send()">Send to Grandchild</button>
+
+<!-- Parent to Child Communicatio Input Decorator -->
+ <app-ticket-card 
+    [title]="event.title"
+    [price]="event.ticketPrice"
+    [availableSeats]="event.totalSeats"
+ />

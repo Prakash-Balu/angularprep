@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Input } from '@angular/core';
 import { GrandchildComponent } from '../grandchild/grandchild.component';
 
 @Component({
@@ -9,4 +9,21 @@ import { GrandchildComponent } from '../grandchild/grandchild.component';
 })
 export class ChildComponent {
   @ViewChild(GrandchildComponent) grandchild!: GrandchildComponent;
+}
+
+
+@Component({
+  selector: 'app-ticket-card',
+  template: `
+    <div class="card">
+      <h3>{{ title }}</h3>
+      <p>Price: {{ price }}</p>
+      <p>Seats: {{ availableSeats }}</p>
+    </div>
+  `
+})
+export class TicketCardComponent {
+  @Input() title: string = '';
+  @Input() price: number = 0;
+  @Input() availableSeats: number = 0;
 }

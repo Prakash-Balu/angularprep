@@ -6,4 +6,8 @@
     [title]="event.title"
     [price]="event.ticketPrice"
     [availableSeats]="event.totalSeats"
+
+    (bookCliked)="handleBooking($event)"
  />
+
+ <p *ngIf="eventId">Event ID: {{ eventId }}</p>

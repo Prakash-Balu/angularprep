@@ -1,4 +1,4 @@
-import { Component, ViewChild, Input } from '@angular/core';
+import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { GrandchildComponent } from '../grandchild/grandchild.component';
 
 @Component({
@@ -20,10 +20,20 @@ export class ChildComponent {
       <p>Price: {{ price }}</p>
       <p>Seats: {{ availableSeats }}</p>
     </div>
+
+    <div class="seat-book">
+      <button (click)="onBook()">Book now</button>
+    </div>
   `
 })
 export class TicketCardComponent {
   @Input() title: string = '';
   @Input() price: number = 0;
   @Input() availableSeats: number = 0;
+
+  @Output() bookCliked = new EventEmitter<string>();
+
+  onBook() {
+    this.bookCliked.emit('EVT-001');
+  }
 }

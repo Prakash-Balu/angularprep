@@ -1,0 +1,93 @@
+<!-- contact.component.html -->
+<div class="contact-wrapper">
+  <h2>Contact Us</h2>
+
+  <!-- Success message after submit -->
+  <div *ngIf="submitted" class="success-banner">
+    {{ successMessage }}
+  </div>
+
+  <form #contactForm="ngForm" (ngSubmit)="onSubmit()" *ngIf="!submitted">
+
+    <!-- Name -->
+    <div class="field">
+      <label>Full Name *</label>
+      <input
+        type="text"
+        name="name"
+        [(ngModel)]="contact.name"
+        required
+        minlength="2"
+        #nameRef="ngModel"
+        placeholder="John Doe"
+      />
+      <span class="error" *ngIf="nameRef.invalid && nameRef.touched">
+        <span *ngIf="nameRef.errors?.['required']">Name is required.</span>
+        <span *ngIf="nameRef.errors?.['minlength']">At least 2 characters.</span>
+      </span>
+    </div>
+
+    <!-- Email -->
+    <div class="field">
+      <label>Email Address *</label>
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="contact.email"
+        required
+        email
+        #emailRef="ngModel"
+        placeholder="john@example.com"
+      />
+      <span class="error" *ngIf="emailRef.invalid && emailRef.touched">
+        <span *ngIf="emailRef.errors?.['required']">Email is required.</span>
+        <span *ngIf="emailRef.errors?.['email']">Enter a valid email.</span>
+      </span>
+    </div>
+
+    <!-- Subject -->
+    <div class="field">
+      <label>Subject *</label>
+      <select
+        name="subject"
+        [(ngModel)]="contact.subject"
+        required
+        #subjectRef="ngModel"
+      >
+        <option value="">-- Select a subject --</option>
+        <option value="general">General Inquiry</option>
+        <option value="support">Technical Support</option>
+        <option value="billing">Billing</option>
+        <option value="other">Other</option>
+      </select>
+      <span class="error" *ngIf="subjectRef.invalid && subjectRef.touched">
+        Please select a subject.
+      </span>
+    </div>
+
+    <!-- Message -->
+    <div class="field">
+      <label>Message *</label>
+      <textarea
+        name="message"
+        [(ngModel)]="contact.message"
+        required
+        minlength="10"
+        maxlength="500"
+        rows="5"
+        #messageRef="ngModel"
+        placeholder="Write your message..."
+      ></textarea>
+      <div class="char-count">{{ contact.message.length }}/500</div>
+      <span class="error" *ngIf="messageRef.invalid && messageRef.touched">
+        <span *ngIf="messageRef.errors?.['required']">Message is required.</span>
+        <span *ngIf="messageRef.errors?.['minlength']">At least 10 characters.</span>
+      </span>
+    </div>
+
+    <button type="submit" [disabled]="contactForm.invalid">
+      Send Message
+    </button>
+
+  </form>
+</div>

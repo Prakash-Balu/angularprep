@@ -1,0 +1,82 @@
+<!-- feedback.component.html -->
+<div class="feedback-card">
+
+  <div *ngIf="submitted" class="thank-you">
+    <h3>Thanks for your feedback!</h3>
+    <button (click)="resetForm()">Submit Another</button>
+  </div>
+
+  <form #feedbackForm="ngForm" (ngSubmit)="onSubmit(feedbackForm)" *ngIf="!submitted">
+    <h3>Rate Your Experience</h3>
+
+    <!-- Star Rating -->
+    <div class="star-group">
+      <label>Rating *</label>
+      <div class="stars">
+        <span
+          *ngFor="let star of ratings"
+          [class.active]="feedback.rating !== null && star <= feedback.rating"
+          (click)="feedback.rating = star"
+        >★</span>
+      </div>
+      <!-- Hidden input to hook rating into ngForm validation -->
+      <input
+        type="hidden"
+        name="rating"
+        [(ngModel)]="feedback.rating"
+        required
+        #ratingRef="ngModel"
+      />
+      <span class="error" *ngIf="ratingRef.invalid && feedbackForm.submitted">
+        Please select a rating.
+      </span>
+    </div>
+
+    <!-- Category -->
+    <div class="field">
+      <label>Category *</label>
+      <select
+        name="category"
+        [(ngModel)]="feedback.category"
+        required
+        #catRef="ngModel"
+      >
+        <option value="">-- Pick one --</option>
+        <option value="event">Event Experience</option>
+        <option value="booking">Booking Process</option>
+        <option value="support">Customer Support</option>
+        <option value="app">App / Website</option>
+      </select>
+      <span class="error" *ngIf="catRef.invalid && catRef.touched">
+        Category is required.
+      </span>
+    </div>
+
+    <!-- Comment -->
+    <div class="field">
+      <label>Tell us more</label>
+      <textarea
+        name="comment"
+        [(ngModel)]="feedback.comment"
+        maxlength="300"
+        rows="4"
+        placeholder="Optional — share any details..."
+      ></textarea>
+      <div class="char-hint">{{ feedback.comment.length }}/300</div>
+    </div>
+
+    <!-- Checkbox -->
+    <div class="field checkbox">
+      <input
+        type="checkbox"
+        name="anonymous"
+        [(ngModel)]="feedback.anonymous"
+        id="anonCheck"
+      />
+      <label for="anonCheck">Submit anonymously</label>
+    </div>
+
+    <button type="submit">Submit Feedback</button>
+
+  </form>
+</div>

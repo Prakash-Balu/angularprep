@@ -109,6 +109,30 @@ export const routes: Routes = [
           import('./components/post-list/post-list.component')
             .then(m => m.PostListComponent)
       },
+      {
+        path: 'contact',
+        loadComponent: () =>
+          import('./components/template-driven-forms/contact/contact.component')
+            .then(m => m.ContactComponent)
+      },
+      {
+        path: 'newsletter',
+        loadComponent: () =>
+          import('./components/template-driven-forms/newsletter/newsletter.component')
+            .then(m => m.NewsletterComponent)
+      },
+      {
+        path: 'newsletter',
+        loadComponent: () =>
+          import('./components/template-driven-forms/newsletter/newsletter.component')
+            .then(m => m.NewsletterComponent)
+      },
+      {
+        path: 'feedback',
+        loadComponent: () =>
+          import('./components/template-driven-forms/feedback/feedback.component')
+            .then(m => m.FeedbackComponent)
+      },
     ]
   },
 

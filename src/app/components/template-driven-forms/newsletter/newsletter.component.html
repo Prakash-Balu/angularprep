@@ -1,0 +1,46 @@
+<!-- newsletter.component.html -->
+<div class="newsletter-box">
+
+  <ng-container *ngIf="!isSubscribed; else thankyou">
+    <h3>Stay Updated</h3>
+    <p>Get the latest events delivered to your inbox.</p>
+
+    <form #nlForm="ngForm" (ngSubmit)="onSubscribe(nlForm)">
+
+      <input
+        type="text"
+        name="firstName"
+        [(ngModel)]="subscriber.firstName"
+        placeholder="First name (optional)"
+      />
+      <!-- No required — optional field, no validation needed -->
+
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="subscriber.email"
+        required
+        email
+        #emailRef="ngModel"
+        placeholder="your@email.com"
+      />
+
+      <!-- Inline error — only shows after user has touched the field -->
+      <div class="error" *ngIf="emailRef.invalid && emailRef.touched">
+        Enter a valid email address.
+      </div>
+
+      <div class="error" *ngIf="errorMsg">{{ errorMsg }}</div>
+
+      <button type="submit" [disabled]="nlForm.invalid || isLoading">
+        {{ isLoading ? 'Subscribing...' : 'Subscribe' }}
+      </button>
+
+    </form>
+  </ng-container>
+
+  <ng-template #thankyou>
+    <p class="success">You're subscribed! Check your inbox.</p>
+  </ng-template>
+
+</div>

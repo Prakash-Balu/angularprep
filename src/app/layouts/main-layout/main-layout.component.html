@@ -1,0 +1,30 @@
+<nav class="navbar">
+  <ul class="nav-list">
+    <li routerLinkActive="active"><a routerLink="/awesome">Awesome Counter</a></li>
+    <li routerLinkActive="active"><a routerLink="/counter">Default Counter</a></li>
+    <li routerLinkActive="active"><a routerLink="/parent">Parent - ChangeDetection</a></li>
+    <li routerLinkActive="active"><a routerLink="/communication">Parent - GrandChild Communication</a></li>
+    <li routerLinkActive="active"><a routerLink="/main-box">Main Box</a></li>
+    <li routerLinkActive="active"><a routerLink="/invoice">Invoice</a></li>
+    <li routerLinkActive="active"><a routerLink="/weather">Weather</a></li>
+    <li routerLinkActive="active"><a routerLink="/search">Search</a></li>
+    <li routerLinkActive="active"><a routerLink="/clock">Clock</a></li>
+    <li routerLinkActive="active"><a routerLink="/cart">Shopping Cart</a></li>
+  </ul>
+  <ul class="nav-list">
+    <li routerLinkActive="active"><a routerLink="/temperature">Temperature - Unit converter</a></li>
+    <li routerLinkActive="active"><a routerLink="/stock-alert">Stock alert notification</a></li>
+    <li routerLinkActive="active"><a routerLink="/user-search">User Search</a></li>
+    <li routerLinkActive="active"><a routerLink="/master-details">Master Details</a></li>
+    <li routerLinkActive="active"><a routerLink="/auto-save">Auto Save Form</a></li>
+    <li routerLinkActive="active"><a routerLink="/live-dashboard">Live Dashboard - Polling</a></li>
+    <li routerLinkActive="active"><a routerLink="/post-list">Post List - Polling</a></li>
+    <li><a href="/event-booking">Event Booking</a></li>
+  </ul>
+</nav>
+
+<h2>Current value of the counter {{ count() }}</h2>
+<button (click)="increment()">Increment</button>
+<button (click)="decrement()">Decrement</button>
+
+<router-outlet />

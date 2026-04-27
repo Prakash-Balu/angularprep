@@ -1,0 +1,69 @@
+<div class="seat-selector">
+
+  <!-- Legend -->
+  <div class="legend">
+    <span class="legend-item"><span class="dot available"></span> Available</span>
+    <span class="legend-item"><span class="dot selected"></span> Selected</span>
+    <span class="legend-item"><span class="dot booked"></span> Booked</span>
+  </div>
+
+  <!-- Screen indicator -->
+  <div class="screen">🎬 SCREEN</div>
+
+  <!-- Seat Grid grouped by row -->
+  <div class="seat-grid">
+    @for (rowGroup of seatRows; track rowGroup.row) {
+      <div class="seat-row">
+        <span class="row-label">{{ rowGroup.row }}</span>
+        @for (seat of rowGroup.seats; track seat.id) {
+          <button
+            [class]="getSeatClass(seat)"
+            [disabled]="seat.status === 'booked'"
+            [title]="seat.label"
+            (click)="toggleSeat(seat)"
+          >
+            {{ seat.number }}
+          </button>
+        }
+      </div>
+    }
+  </div>
+
+  <!-- Selection Summary -->
+  <div class="selection-summary">
+    <p>
+      Selected: <strong>{{ selectedSeats.length }}</strong> / {{ maxSelectable }} seats
+      @if (selectedSeats.length > 0) {
+        &nbsp;|&nbsp; Seats:
+        @for (s of selectedSeats; track s.id) {
+          <span class="seat-tag">{{ s.label }}</span>
+        }
+      }
+    </p>
+    @if (selectedSeats.length > 0) {
+      <p class="total-price">Total: <strong>${{ totalPrice }}</strong></p>
+    }
+    @if (selectedSeats.length === maxSelectable) {
+      <p class="max-warn">⚠️ Maximum {{ maxSelectable }} seats reached</p>
+    }
+  </div>
+
+  <!-- Actions -->
+  <div class="seat-actions">
+    <button
+      class="btn-clear"
+      [disabled]="selectedSeats.length === 0"
+      (click)="clearSelection()"
+    >
+      Clear
+    </button>
+    <button
+      class="btn-confirm"
+      [disabled]="selectedSeats.length === 0"
+      (click)="confirmSelection()"
+    >
+      Confirm {{ selectedSeats.length > 0 ? selectedSeats.length + ' Seat(s)' : '' }}
+    </button>
+  </div>
+
+</div>

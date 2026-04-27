@@ -1,0 +1,29 @@
+<div class="event-listing">
+
+  <div class="listing-header">
+    <button class="btn-back" (click)="goBack()">← Back to Home</button>
+    <div>
+      <h2>🎟️ Upcoming Events</h2>
+      <p>Select an event to choose your seats and book tickets</p>
+    </div>
+  </div>
+
+  <div class="event-grid">
+    @for (event of events; track event.id) {
+      <div class="event-card">
+        <div class="event-badge">{{ event.title.split(' ').pop() }}</div>
+        <h3>{{ event.title }}</h3>
+        <ul class="event-meta">
+          <li>📅 {{ event.date }}</li>
+          <li>📍 {{ event.venue }}</li>
+          <li>💺 {{ event.totalSeats }} seats</li>
+          <li>💰 ${{ event.price }} / seat</li>
+        </ul>
+        <button class="btn-select" (click)="selectEvent(event)">
+          Select Seats →
+        </button>
+      </div>
+    }
+  </div>
+
+</div>

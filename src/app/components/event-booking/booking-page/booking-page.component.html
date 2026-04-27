@@ -1,0 +1,181 @@
+@if (!event) {
+  <div class="not-found">
+    <p>❌ Event not found.</p>
+    <button (click)="goBack()">← Back to Events</button>
+  </div>
+} @else {
+
+  <div class="booking-page">
+
+    <!-- Header -->
+    <div class="booking-header">
+      <div class="header-nav">
+        <button class="btn-back" (click)="goToHome()">⌂ Home</button>
+        <button class="btn-back" (click)="goBack()">← Events</button>
+      </div>
+      <div>
+        <h2>{{ event.title }}</h2>
+        <p>📅 {{ event.date }} &nbsp;|&nbsp; 📍 {{ event.venue }} &nbsp;|&nbsp; 💰 ${{ event.price }} / seat</p>
+      </div>
+    </div>
+
+    <!-- Step Indicator -->
+    <div class="steps">
+      <span [class.active]="step === 'seats'"     [class.done]="step !== 'seats'">1. Select Seats</span>
+      <span class="divider">›</span>
+      <span [class.active]="step === 'details'"   [class.done]="step === 'confirmed'">2. Your Details</span>
+      <span class="divider">›</span>
+      <span [class.active]="step === 'confirmed'">3. Confirmed</span>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         STEP 1 — Seat Selector (child component)
+         Live count badge driven by @Output selectionChanged
+         Seat confirmation driven by @Output seatsConfirmed
+    ══════════════════════════════════════ -->
+    @if (step === 'seats') {
+      <div class="step-content">
+        <div class="step-header">
+          <h3>Select Your Seats</h3>
+          @if (liveSelectionCount > 0) {
+            <span class="live-badge">{{ liveSelectionCount }} selected</span>
+          }
+        </div>
+
+        <!--
+          ⬇️  @Input  — passes seats[] and config DOWN to child
+          ⬆️  @Output — listens to events coming UP from child
+        -->
+        <app-seat-selector
+          [seats]="seats"
+          [maxSelectable]="maxSelectable"
+          [pricePerSeat]="event.price"
+          (selectionChanged)="onSelectionChanged($event)"
+          (seatsConfirmed)="onSeatsConfirmed($event)"
+        />
+      </div>
+    }
+
+    <!-- ══════════════════════════════════════
+         STEP 2 — Attendee Details Form (Reactive Form)
+    ══════════════════════════════════════ -->
+    @if (step === 'details') {
+      <div class="step-content">
+        <h3>Your Details</h3>
+
+        <!-- Seats summary banner -->
+        <div class="seats-summary">
+          🎟️ Seats:
+          @for (s of confirmedSeats; track s.id) {
+            <span class="seat-tag">{{ s.label }}</span>
+          }
+          &nbsp;— Total: <strong>${{ confirmedSeats.length * event.price }}</strong>
+        </div>
+
+        <form [formGroup]="attendeeForm" (ngSubmit)="submitBooking()" class="booking-form" novalidate>
+
+          <!-- Name -->
+          <div class="form-field">
+            <label for="name">Full Name *</label>
+            <input
+              id="name"
+              type="text"
+              formControlName="name"
+              placeholder="John Doe"
+              [class.invalid]="nameCtrl.invalid && nameCtrl.touched"
+            />
+            @if (nameCtrl.touched && nameCtrl.hasError('required')) {
+              <span class="error">Name is required</span>
+            } @else if (nameCtrl.touched && nameCtrl.hasError('minlength')) {
+              <span class="error">Minimum 3 characters</span>
+            }
+          </div>
+
+          <!-- Email -->
+          <div class="form-field">
+            <label for="email">Email Address *</label>
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              placeholder="john@example.com"
+              [class.invalid]="emailCtrl.invalid && emailCtrl.touched"
+            />
+            @if (emailCtrl.touched && emailCtrl.hasError('required')) {
+              <span class="error">Email is required</span>
+            } @else if (emailCtrl.touched && emailCtrl.hasError('email')) {
+              <span class="error">Enter a valid email</span>
+            }
+          </div>
+
+          <!-- Phone -->
+          <div class="form-field">
+            <label for="phone">Phone Number *</label>
+            <input
+              id="phone"
+              type="tel"
+              formControlName="phone"
+              placeholder="10-digit number"
+              [class.invalid]="phoneCtrl.invalid && phoneCtrl.touched"
+            />
+            @if (phoneCtrl.touched && phoneCtrl.hasError('required')) {
+              <span class="error">Phone is required</span>
+            } @else if (phoneCtrl.touched && phoneCtrl.hasError('pattern')) {
+              <span class="error">Enter a valid 10-digit number</span>
+            }
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" (click)="step = 'seats'">← Back</button>
+            <button
+              type="submit"
+              class="btn-primary"
+              [disabled]="attendeeForm.invalid"
+            >
+              Confirm Booking →
+            </button>
+          </div>
+
+        </form>
+      </div>
+    }
+
+    <!-- ══════════════════════════════════════
+         STEP 3 — Booking Confirmation
+    ══════════════════════════════════════ -->
+    @if (step === 'confirmed' && confirmation) {
+      <div class="step-content confirmation">
+
+        <div class="success-icon">✅</div>
+        <h3>Booking Confirmed!</h3>
+        <p class="booking-id">Booking ID: <strong>{{ confirmation.bookingId }}</strong></p>
+
+        <div class="confirmation-card">
+          <div class="conf-row"><span>Event</span><strong>{{ confirmation.event.title }}</strong></div>
+          <div class="conf-row"><span>Date</span><strong>{{ confirmation.event.date }}</strong></div>
+          <div class="conf-row"><span>Venue</span><strong>{{ confirmation.event.venue }}</strong></div>
+          <div class="conf-row">
+            <span>Seats</span>
+            <strong>
+              @for (s of confirmation.seats; track s.id) {
+                <span class="seat-tag">{{ s.label }}</span>
+              }
+            </strong>
+          </div>
+          <div class="conf-row"><span>Attendee</span><strong>{{ confirmation.attendee.name }}</strong></div>
+          <div class="conf-row"><span>Email</span><strong>{{ confirmation.attendee.email }}</strong></div>
+          <div class="conf-row"><span>Phone</span><strong>{{ confirmation.attendee.phone }}</strong></div>
+          <div class="conf-row total"><span>Total Paid</span><strong>${{ confirmation.totalAmount }}</strong></div>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn-secondary" (click)="goToHome()">⌂ Back to Home</button>
+          <button class="btn-primary" (click)="bookAnother()">Book More Seats</button>
+        </div>
+
+      </div>
+    }
+
+  </div>
+
+}

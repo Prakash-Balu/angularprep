@@ -122,16 +122,22 @@ export const routes: Routes = [
             .then(m => m.NewsletterComponent)
       },
       {
-        path: 'newsletter',
-        loadComponent: () =>
-          import('./components/template-driven-forms/newsletter/newsletter.component')
-            .then(m => m.NewsletterComponent)
-      },
-      {
         path: 'feedback',
         loadComponent: () =>
           import('./components/template-driven-forms/feedback/feedback.component')
             .then(m => m.FeedbackComponent)
+      },
+      {
+        path: 'event-reg',
+        loadComponent: () =>
+          import('./components/reactive-forms/event-registration/event-registration.component')
+            .then(m => m.EventRegistrationComponent)
+      },
+      {
+        path: 'event-wizard',
+        loadComponent: () =>
+          import('./components/reactive-forms/event-wizard/event-wizard.component')
+            .then(m => m.EventWizardComponent)
       },
     ]
   },

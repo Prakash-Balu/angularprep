@@ -1,0 +1,161 @@
+<!-- event-wizard.component.html -->
+<div class="wizard-container">
+
+  <!-- ── Success Screen ── -->
+  <div *ngIf="submitted" class="wizard-success">
+    <h2>Event Created!</h2>
+    <p>Your event has been saved as a draft.</p>
+    <button (click)="resetWizard()">Create Another</button>
+  </div>
+
+  <ng-container *ngIf="!submitted">
+
+    <!-- ── Step Indicator ── -->
+    <div class="step-indicator">
+      <div
+        *ngFor="let s of [1,2,3]"
+        class="step-dot"
+        [class.active]="currentStep === s"
+        [class.completed]="isStepValid(s) && isStepTouched(s)"
+        (click)="goToStep(s)"
+      >
+        <span>{{ s }}</span>
+        <label>{{ ['Event Info', 'Date & Price', 'Seats & Details'][s-1] }}</label>
+      </div>
+    </div>
+
+    <!-- ── Progress Bar ── -->
+    <div class="progress-bar">
+      <div class="progress-fill" [style.width.%]="progressPercent"></div>
+    </div>
+
+    <form [formGroup]="wizard" (ngSubmit)="onSubmit()">
+
+      <!-- ════ STEP 1 — Event Info ════ -->
+      <div *ngIf="currentStep === 1" formGroupName="step1" class="step-panel">
+        <h3>Step 1 — Event Info</h3>
+
+        <div class="field">
+          <label>Event Title *</label>
+          <input formControlName="title" placeholder="e.g. Annual Tech Summit" />
+          <span class="error"
+            *ngIf="step1.get('title')?.invalid && step1.get('title')?.touched">
+            <span *ngIf="step1.get('title')?.errors?.['required']">Title is required.</span>
+            <span *ngIf="step1.get('title')?.errors?.['minlength']">At least 5 characters.</span>
+          </span>
+        </div>
+
+        <div class="field">
+          <label>Venue *</label>
+          <input formControlName="venue" placeholder="e.g. Convention Center, Hall A" />
+          <span class="error"
+            *ngIf="step1.get('venue')?.invalid && step1.get('venue')?.touched">
+            Venue is required.
+          </span>
+        </div>
+
+        <div class="field">
+          <label>Status *</label>
+          <select formControlName="status">
+            <option value="draft">Draft</option>
+            <option value="published">Published</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- ════ STEP 2 — Date & Price ════ -->
+      <div *ngIf="currentStep === 2" formGroupName="step2" class="step-panel">
+        <h3>Step 2 — Date & Price</h3>
+
+        <!-- Cross-field error at group level -->
+        <div class="error" *ngIf="step2.errors?.['pastDate'] && step2.touched">
+          Event date and time must be in the future.
+        </div>
+
+        <div class="field">
+          <label>Event Date *</label>
+          <input type="date" formControlName="date" />
+          <span class="error"
+            *ngIf="step2.get('date')?.invalid && step2.get('date')?.touched">
+            Date is required.
+          </span>
+        </div>
+
+        <div class="field">
+          <label>Event Time *</label>
+          <input type="time" formControlName="time" />
+          <span class="error"
+            *ngIf="step2.get('time')?.invalid && step2.get('time')?.touched">
+            Time is required.
+          </span>
+        </div>
+
+        <div class="field">
+          <label>Ticket Price (₹) *</label>
+          <input type="number" formControlName="ticketPrice" min="0" />
+          <span class="error"
+            *ngIf="step2.get('ticketPrice')?.invalid && step2.get('ticketPrice')?.touched">
+            Price must be 0 or more.
+          </span>
+        </div>
+      </div>
+
+      <!-- ════ STEP 3 — Seats & Description ════ -->
+      <div *ngIf="currentStep === 3" formGroupName="step3" class="step-panel">
+        <h3>Step 3 — Seats & Details</h3>
+
+        <div class="field">
+          <label>Total Seats *</label>
+          <input type="number" formControlName="totalSeats" min="1" max="10000" />
+          <span class="error"
+            *ngIf="step3.get('totalSeats')?.invalid && step3.get('totalSeats')?.touched">
+            <span *ngIf="step3.get('totalSeats')?.errors?.['required']">Seats is required.</span>
+            <span *ngIf="step3.get('totalSeats')?.errors?.['min']">At least 1 seat.</span>
+            <span *ngIf="step3.get('totalSeats')?.errors?.['max']">Max 10,000 seats.</span>
+          </span>
+        </div>
+
+        <div class="field">
+          <label>Description *</label>
+          <textarea formControlName="description" rows="5"
+            placeholder="Describe the event in at least 20 characters..."></textarea>
+          <span class="error"
+            *ngIf="step3.get('description')?.invalid && step3.get('description')?.touched">
+            <span *ngIf="step3.get('description')?.errors?.['required']">Description is required.</span>
+            <span *ngIf="step3.get('description')?.errors?.['minlength']">At least 20 characters.</span>
+          </span>
+        </div>
+
+        <!-- ── Review Summary ── -->
+        <div class="review-summary">
+          <h4>Review Before Submitting</h4>
+          <table>
+            <tr><td>Title</td>     <td>{{ step1.get('title')?.value }}</td></tr>
+            <tr><td>Venue</td>     <td>{{ step1.get('venue')?.value }}</td></tr>
+            <tr><td>Date</td>      <td>{{ step2.get('date')?.value }} {{ step2.get('time')?.value }}</td></tr>
+            <tr><td>Price</td>     <td>₹{{ step2.get('ticketPrice')?.value }}</td></tr>
+            <tr><td>Seats</td>     <td>{{ step3.get('totalSeats')?.value }}</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── Navigation Buttons ── -->
+      <div class="wizard-actions">
+        <button type="button" (click)="back()" *ngIf="currentStep > 1">
+          ← Back
+        </button>
+
+        <button type="button" (click)="next()" *ngIf="currentStep < totalSteps">
+          Next →
+        </button>
+
+        <button type="submit" *ngIf="currentStep === totalSteps"
+          [disabled]="wizard.invalid">
+          Create Event
+        </button>
+      </div>
+
+    </form>
+
+  </ng-container>
+</div>

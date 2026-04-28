@@ -1,0 +1,21 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <input formControlName="name" />
+    <div *ngIf="form.get('name')?.hasError('minlength')">
+        Name too short
+    </div>
+
+    <input formControlName="email" />
+    <input formControlName="ticketCount" type="number" />
+
+    <!-- Dynamic attendees list -->
+     <div formArrayName="attendees">
+        <div *ngFor="let a of attendees.controls; let i = index" [formGroupName]="i">
+            <input formControlName="attendeeName" placeholder="name" />
+            <input formControlName="age" type="number" placeholder="age" />
+            <button type="button" (click)="removeAttendee(i)">Remove</button>
+        </div>
+     </div>
+
+     <button type="button" (click)="addAttendee()">+ Add Attendee</button>
+     <button type="submit" [disabled]="form.invalid">Register</button>
+</form>

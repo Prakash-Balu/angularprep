@@ -1,0 +1,69 @@
+<div class="container mt-4">
+  <div class="card shadow">
+
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">Add User</h4>
+    </div>
+
+    <div class="card-body">
+
+      <!-- Add User Form -->
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <input type="text" class="form-control" [(ngModel)]="newUserName" placeholder="Enter user name" />
+        </div>
+        <div class="col-md-3">
+          <select class="form-select" [(ngModel)]="newUserStatus">
+            <option [value]="true">Active</option>
+            <option [value]="false">Inactive</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-success w-100" (click)="addUser()">
+            <i class="bi bi-person-plus"></i> Add User
+          </button>
+        </div>
+      </div>
+
+      <!-- Filter Buttons -->
+      <div class="mb-3 d-flex gap-2">
+        <button class="btn btn-outline-secondary"
+          [class.active]="filterStatus === null"
+          (click)="filterStatus = null">
+          All
+        </button>
+        <button class="btn btn-outline-success"
+          [class.active]="filterStatus === true"
+          (click)="filterStatus = true">
+          Active
+        </button>
+        <button class="btn btn-outline-danger"
+          [class.active]="filterStatus === false"
+          (click)="filterStatus = false">
+          Inactive
+        </button>
+      </div>
+
+      <!-- Results -->
+      <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th>Name</th>
+            <th>Active</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users | filterActive:filterStatus;">
+            <td>{{ user.name }}</td>
+            <td>
+              <span class="badge" [ngClass]="user.isActive ? 'bg-success' : 'bg-danger'">
+                {{ user.isActive ? 'Active' : 'Inactive' }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>

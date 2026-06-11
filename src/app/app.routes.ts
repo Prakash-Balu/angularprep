@@ -139,6 +139,18 @@ export const routes: Routes = [
           import('./components/reactive-forms/event-wizard/event-wizard.component')
             .then(m => m.EventWizardComponent)
       },
+      {
+        path: 'add-user',
+        loadComponent: () =>
+          import('./components/add-user-filter/add-user-filter.component')
+            .then(m => m.AddUserFilterComponent)
+      },
+      {
+        path: 'view-encapsulation',
+        loadComponent: () =>
+          import('./components/view-encapsulation/view-encapsulation-demo.component')
+            .then(m => m.ViewEncapsulationDemoComponent)
+      },
     ]
   },
 

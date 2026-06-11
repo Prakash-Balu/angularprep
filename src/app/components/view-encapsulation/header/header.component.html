@@ -1,0 +1,14 @@
+<div class="card">
+  <span class="badge">ViewEncapsulation.Emulated</span>
+  <h3>Emulated (Default)</h3>
+  <p class="highlight">Styles are <strong>scoped</strong> to this component.</p>
+  <p class="description">Angular rewrites selectors with a unique attribute (e.g. <code>[_nghost-xxx]</code>) so styles never leak out — but global styles CAN still enter.</p>
+  <ul>
+    <li>✅ Safe — no style bleed between siblings</li>
+    <li>✅ Global styles still apply</li>
+    <li>❌ Not true Shadow DOM</li>
+  </ul>
+  <div class="global-highlight">
+    🌍 I am styled by <code>.global-highlight</code> in <strong>styles.scss</strong> — global styles enter Emulated components!
+  </div>
+</div>

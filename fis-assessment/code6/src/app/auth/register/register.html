@@ -1,0 +1,71 @@
+<div class="register-wrapper">
+  <div class="register-card">
+    <h2>Register</h2>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="Enter your email"
+          [class.input-error]="email.invalid && email.touched"
+        />
+        <div class="error-msg" *ngIf="email.touched && email.invalid">
+          <small *ngIf="email.errors?.['required']">Email is required.</small>
+          <small *ngIf="email.errors?.['email']">Enter a valid email address.</small>
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Enter your password"
+          [class.input-error]="password.invalid && password.touched"
+        />
+        <div class="error-msg" *ngIf="password.touched && password.invalid">
+          <small *ngIf="password.errors?.['required']">Password is required.</small>
+          <small *ngIf="password.errors?.['minlength']">Minimum 6 characters required.</small>
+        </div>
+      </div>
+
+      <!-- Confirm Password Field -->
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input
+          id="confirmPassword"
+          type="password"
+          formControlName="confirmPassword"
+          placeholder="Re-enter your password"
+          [class.input-error]="(confirmPassword.invalid && confirmPassword.touched) || passwordMismatch"
+        />
+        <div class="error-msg" *ngIf="confirmPassword.touched && confirmPassword.errors?.['required']">
+          <small>Confirm Password is required.</small>
+        </div>
+        <div class="error-msg" *ngIf="passwordMismatch">
+          <small>Passwords do not match.</small>
+        </div>
+      </div>
+
+      <!-- API Response Messages -->
+      <div class="success-msg" *ngIf="successMsg">{{ successMsg }}</div>
+      <div class="error-msg api-error" *ngIf="errMsg">{{ errMsg }}</div>
+
+      <button type="submit" [disabled]="isLoading">
+        {{ isLoading ? 'Registering...' : 'Register' }}
+      </button>
+
+      <p class="redirect-text">
+        Already have an account? <a routerLink="/login">Login here</a>
+      </p>
+
+    </form>
+  </div>
+</div>

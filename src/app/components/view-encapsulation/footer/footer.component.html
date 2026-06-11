@@ -1,0 +1,16 @@
+<div class="card">
+  <span class="badge">ViewEncapsulation.None</span>
+  <h3>None — Styles Go Global</h3>
+  <p class="highlight">Styles are <strong>NOT</strong> scoped — they leak into the whole page!</p>
+  <p class="description">Angular writes the component CSS directly to the <code>&lt;head&gt;</code> as a plain stylesheet. Any class name defined here becomes a global style.</p>
+  <ul>
+    <li>⚠️ Risk — can unintentionally override sibling styles</li>
+    <li>✅ Useful for theming/overlay libraries</li>
+    <li>✅ Easiest to override from outside</li>
+  </ul>
+  <div class="leak-demo">
+    👆 The <code>.leak-demo</code> red border style you see here is defined in
+    <em>this</em> component's CSS — but it will also affect any other element
+    with class <code>leak-demo</code> anywhere in the app!
+  </div>
+</div>

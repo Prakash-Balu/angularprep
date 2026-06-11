@@ -36,3 +36,12 @@ const bound = greet.bind(person, 'Mumbai', 'India');
 bound();
 
 
+const obj1 = [1, 2, 3];
+const obj2 = [4, 5];
+const merged = [...obj1, ...obj2];
+console.log(merged);
+
+const [first, ...restnumbers] = [1, 2, 3, 4, 5];
+console.log(first);
+console.log(restnumbers);
+

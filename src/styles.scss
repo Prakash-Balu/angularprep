@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+.card {
+  code {
+    background: #223bdd;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 12px;
+  }
+}
+
+/* Global highlight — enters Emulated & None, blocked by ShadowDom */
+.global-highlight {
+  background: linear-gradient(135deg, #fff176, #ffeb3b);
+  border-left: 4px solid #f9a825;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #5d4037;
+  margin-top: 10px;
+  font-weight: 500;
+}

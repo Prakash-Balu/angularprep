@@ -1,0 +1,20 @@
+<div class="card">
+  <span class="badge">ViewEncapsulation.ShadowDom</span>
+  <h3>ShadowDom — True Isolation</h3>
+  <p class="highlight">Styles are <strong>completely isolated</strong> using native browser Shadow DOM.</p>
+  <p class="description">The browser creates a real shadow root. Component styles cannot leak out AND global styles cannot enter (unless CSS custom properties / variables are used).</p>
+  <ul>
+    <li>✅ Perfect isolation — no leaks in or out</li>
+    <li>⚠️ Global styles (e.g. Bootstrap) have no effect here</li>
+    <li>✅ Best for reusable widget libraries</li>
+    <li>⚠️ Limited IE/older browser support</li>
+  </ul>
+  <div class="global-highlight">
+    🚫 Same <code>.global-highlight</code> class from <strong>styles.scss</strong> — but no yellow background here! Global styles are blocked by Shadow DOM.
+  </div>
+  <div class="shadow-demo">
+    🛡️ Even if <code>.shadow-demo</code> exists globally, this style is
+    completely local to the shadow root. Open DevTools → Elements to see
+    <code>#shadow-root</code>.
+  </div>
+</div>

@@ -1,0 +1,53 @@
+<div class="demo-container">
+  <div class="page-header">
+    <h2>Angular ViewEncapsulation — Live Demo</h2>
+    <p class="subtitle">
+      All three cards below use the <strong>same class names</strong> (<code>.card</code>, <code>.badge</code>, <code>.highlight</code>).
+      Watch how each encapsulation mode handles style isolation differently.
+    </p>
+  </div>
+
+  <!-- Comparison table -->
+  <div class="comparison-table">
+    <div class="col-header">Mode</div>
+    <div class="col-header">Styles leak OUT?</div>
+    <div class="col-header">Global styles enter?</div>
+    <div class="col-header">Uses Shadow DOM?</div>
+
+    <div class="mode emulated">Emulated (default)</div>
+    <div class="cell no">No ✅</div>
+    <div class="cell yes">Yes ⚠️</div>
+    <div class="cell no">No (simulated)</div>
+
+    <div class="mode none">None</div>
+    <div class="cell yes">Yes ⚠️</div>
+    <div class="cell yes">Yes ✅</div>
+    <div class="cell no">No</div>
+
+    <div class="mode shadow">ShadowDom</div>
+    <div class="cell no">No ✅</div>
+    <div class="cell no">No ✅</div>
+    <div class="cell yes">Yes (native)</div>
+  </div>
+
+  <!-- Live component cards -->
+  <div class="cards-grid">
+    <app-header />
+    <app-footer />
+    <app-sidebar />
+  </div>
+
+  <!-- Leak proof section -->
+  <div class="leak-proof">
+    <h3>🔬 Proof of Leak — ViewEncapsulation.None</h3>
+    <p>
+      The <code>.leak-demo</code> class is defined <em>inside</em> the <strong>None</strong> component's stylesheet.
+      Because <code>ViewEncapsulation.None</code> injects styles globally, the box below — which lives
+      in the <em>parent</em> template — also gets styled by it:
+    </p>
+    <div class="leak-demo">
+      I am in the <strong>parent</strong> template, but I'm styled by the
+      <code>FooterComponent</code>'s CSS because it uses <code>ViewEncapsulation.None</code>!
+    </div>
+  </div>
+</div>

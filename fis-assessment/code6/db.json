@@ -1,0 +1,17 @@
+{
+  "users": [
+    {
+      "email": "sdds@gmail.com",
+      "password": "123456",
+      "confirmPassword": "123456",
+      "id": "lXdGoGXWX4A"
+    },
+    {
+      "email": "pppp@gmail.com",
+      "password": "Welcome@123",
+      "confirmPassword": "Welcome@123",
+      "id": "7X5lLjrmHA8"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

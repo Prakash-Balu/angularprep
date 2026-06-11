@@ -1,0 +1,53 @@
+<div class="login-wrapper">
+  <div class="login-card">
+    <h2>Login</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="Enter your email"
+          [class.input-error]="email.invalid && email.touched"
+        />
+        <div class="error-msg" *ngIf="email.touched && email.invalid">
+          <small *ngIf="email.errors?.['required']">Email is required.</small>
+          <small *ngIf="email.errors?.['email']">Enter a valid email address.</small>
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Enter your password"
+          [class.input-error]="password.invalid && password.touched"
+        />
+        <div class="error-msg" *ngIf="password.touched && password.invalid">
+          <small *ngIf="password.errors?.['required']">Password is required.</small>
+          <small *ngIf="password.errors?.['minlength']">Minimum 6 characters required.</small>
+        </div>
+      </div>
+
+      <!-- API Response Messages -->
+      <div class="success-msg" *ngIf="successMsg">{{ successMsg }}</div>
+      <div class="error-msg api-error" *ngIf="errorMsg">{{ errorMsg }}</div>
+
+      <button type="submit" [disabled]="isLoading">
+        {{ isLoading ? 'Logging in...' : 'Login' }}
+      </button>
+
+      <p class="redirect-text">
+        Don't have an account? <a routerLink="/register">Register here</a>
+      </p>
+
+    </form>
+  </div>
+</div>
